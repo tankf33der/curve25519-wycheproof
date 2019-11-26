@@ -76,7 +76,7 @@
          (unless (= Result (check_c Sig Pk Msg))
             (printsp C) ) ) ) )
 (prinl)
-(test 111 C) # check EOF
+(test 145 C) # check EOF
 
 (msg 'c25519-eddsa-OK)
 (bye)
