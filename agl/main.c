@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
-#include "curve25519.h"
+//#include "curve25519.h"
 
 int main() {
 	uint8_t k[32] = {9};

@@ -858,3 +858,50 @@ curve25519_donna(u8 *mypublic, const u8 *secret, const u8 *basepoint) {
   fcontract(mypublic, z);
   return 0;
 }
+
+#include <stdio.h>
+#include <stdint.h>
+//#include "curve25519.h"
+
+int main() {
+	uint8_t k[32] = {9};
+	uint8_t u[32] = {66, 44, 142, 122, 98, 39, 215, 188, 161, 53, 11, 62, 43, 183, 39, 159, 120, 151, 184, 123, 182, 133, 75, 120, 60, 96, 232, 3, 17, 174, 48, 121};
+	uint8_t r[32];
+
+	curve25519_donna(r, u, k);
+	printf("%d\n", r[0]);
+	return 0;
+
+}
+
+int
+memcmp (const void *str1, const void *str2, size_t count)
+{
+  register const unsigned char *s1 = (const unsigned char*)str1;
+  register const unsigned char *s2 = (const unsigned char*)str2;
+
+  while (count-- > 0)
+    {
+      if (*s1++ != *s2++)
+	  return s1[-1] < s2[-1] ? -1 : 1;
+    }
+  return 0;
+}
+
+void *memcpy(void *__restrict __dest, const void *__restrict __src, size_t __n)
+{
+   char *csrc = (char *)__src;
+   char *cdest = (char *)__dest;
+   for (int i=0; i<__n; i++)
+       cdest[i] = csrc[i];
+}
+
+void* memset(void *s, int c, size_t len) {
+    unsigned char *dst = s;
+    while (len > 0) {
+        *dst = (unsigned char) c;
+        dst++;
+        len--;
+    }
+    return s;
+}
