@@ -5,30 +5,30 @@
       (for (L (chop H) L (cddr L))
          (link (hex (pack (car L) (cadr L)))) ) ) )
 (de L2hex (Lst)
-   (lowc 
+   (lowc
       (pack
          (mapcar '((B) (pad 2 (hex B))) Lst) ) ) )
 (de randL (N)
    (make (do N (link (rand 0 255)))) )
 (de check_c (Sig P M)
    (let ML (length M)
-      (if 
+      (if
          (=1
             (native
-               "libc25519.so.0"
-               "edsign_verify"
+               "liborlp.so.0"
+               "ed25519_verify"
                'I
                (cons NIL (64) Sig)
-               (cons NIL (32) P)
                (cons NIL (cons ML) M)
-               ML ) )
+               ML
+               (cons NIL (32) P) ) )
          0
          -1 ) ) )
 (de check_m (Sig P M)
    (let ML (length M)
       (native
          "libmonocypher.so"
-         "crypto_check"
+         "crypto_ed25519_check"
          'I
          (cons NIL (64) Sig)
          (cons NIL (32) P)
@@ -66,7 +66,7 @@
 (zero C)
 (in "eddsa_test.csv"
    (until (eof)
-      (let 
+      (let
          (Pk (prog1 (hex2L (till "," T)) (char))
             Sk (prog1 (hex2L (till "," T)) (char))
             Msg (prog1 (hex2L (till "," T)) (char))
@@ -78,6 +78,6 @@
 (prinl)
 (test 145 C) # check EOF
 
-(msg 'c25519-eddsa-OK)
+(msg 'orlp-eddsa-OK)
 (bye)
 
