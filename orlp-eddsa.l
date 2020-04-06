@@ -73,8 +73,8 @@
             Sig (prog1 (hex2L (till "," T)) (char))
             Result (format (line)) )
          (inc 'C)
-         (unless (= Result (check_c Sig Pk Msg))
-            (printsp C) ) ) ) )
+         (unless (= Result (setq @@ (check_c Sig Pk Msg)))
+            (printsp C Result @@) ) ) ) )
 (prinl)
 (test 145 C) # check EOF
 
