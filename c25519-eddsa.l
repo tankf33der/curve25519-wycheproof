@@ -5,14 +5,14 @@
       (for (L (chop H) L (cddr L))
          (link (hex (pack (car L) (cadr L)))) ) ) )
 (de L2hex (Lst)
-   (lowc 
+   (lowc
       (pack
          (mapcar '((B) (pad 2 (hex B))) Lst) ) ) )
 (de randL (N)
    (make (do N (link (rand 0 255)))) )
 (de check_c (Sig P M)
    (let ML (length M)
-      (if 
+      (if
          (=1
             (native
                "libc25519.so.0"
@@ -24,6 +24,16 @@
                ML ) )
          0
          -1 ) ) )
+(de public_key_c (S)
+   (println 'in S)
+   (use P
+      (native
+         "libc25519.so.0"
+         "edsign_sec_to_pub"
+         NIL
+         '(P (32 B . 32))
+         (cons NIL (32) S) )
+      P ) )
 (de check_m (Sig P M)
    (let ML (length M)
       (native
@@ -48,6 +58,9 @@
       (hex2L "edffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff7fedffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff7f")
       (hex2L "7d4d0e7f6153a69b6242b522abbee685fda4420f8834b108c3bdae369ef549fa")
       (hex2L "3f") ) )
+
+(println (public_key_c (conc (cons 255) (range 1 30) (cons 255))))
+
 # XXX, done
 (let (S (need 64 0)  P (need 32 0)  M)
    (setq M (94 25 120))
@@ -66,7 +79,7 @@
 (zero C)
 (in "eddsa_test.csv"
    (until (eof)
-      (let 
+      (let
          (Pk (prog1 (hex2L (till "," T)) (char))
             Sk (prog1 (hex2L (till "," T)) (char))
             Msg (prog1 (hex2L (till "," T)) (char))
