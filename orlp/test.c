@@ -9,7 +9,6 @@
 #include "ge.h"
 #include "sc.h"
 
-
 int main() {
     unsigned char public_key[32], private_key[64], seed[32], scalar[32];
     unsigned char other_public_key[32], other_private_key[64];
